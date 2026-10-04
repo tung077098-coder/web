@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+
+    <style>
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+        }
+
+        .card {
+            height: 100px;
+            font-size: 40px;
+            background: lightblue;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Memory Game</h1>
+
+    <p>Score: <span id="score">0</span></p>
+
+    <div id="grid"></div>
+
+    <script>
+
+
+        let cards = ["⚽", "⚽", "🏀", "🏀", "🎮", "🎮", "🚗", "🚗"];
+
+
+        cards.sort(() => Math.random() - 0.5);
+
+        let grid = document.getElementById("grid");
+        let score = 0;
+
+        let firstCard = null;
+        let secondCard = null;
+
+
+        for (let i = 0; i < cards.length; i++) {
+
+            let card = document.createElement("button");
+
+            card.className = "card";
+            card.innerText = "?";
+
+            card.onclick = function () {
+
+
+                card.innerText = cards[i];
+
+
+                if (firstCard == null) {
+                    firstCard = card;
+                }
+
+
+                else {
+                    secondCard = card;
+
+
+                    setInterval(function () {
+
+
+                        if (firstCard.innerText == secondCard.innerText) {
+                            score++;
+                            document.getElementById("score").innerText = score;
+                        }
+
+                        else {
+                            firstCard.innerText = "?";
+                            secondCard.innerText = "?";
+                        }
+
+                        firstCard = null;
+                        secondCard = null;
+
+                    }, 500);
+                }
+            };
+
+            grid.appendChild(card);
+        }
+
+    </script>
+
+</body>
+
+</html>
